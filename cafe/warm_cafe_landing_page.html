@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafe Komorebi｜架空カフェの紹介ページ</title>
+  <style>
+    :root {
+      --bg: #f7f1e8;
+      --bg-soft: #fffaf3;
+      --text: #3d3028;
+      --muted: #7a6758;
+      --main: #8b5e3c;
+      --main-dark: #5d3f2c;
+      --accent: #c99a6b;
+      --line: #e8d8c4;
+      --white: #ffffff;
+      --shadow: 0 18px 45px rgba(75, 48, 31, 0.12);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.8;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 96px 0;
+    }
+
+    .section-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--main-dark);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .section-label::before {
+      content: "";
+      width: 36px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.02rem;
+      max-width: 680px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      color: var(--white);
+      background: var(--main);
+      box-shadow: 0 12px 28px rgba(93, 63, 44, 0.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      background: var(--main-dark);
+      box-shadow: 0 18px 34px rgba(93, 63, 44, 0.28);
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      width: 100%;
+      background: rgba(255, 250, 243, 0.86);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(232, 216, 196, 0.72);
+    }
+
+    .header-inner {
+      width: min(1180px, calc(100% - 32px));
+      height: 76px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--main-dark);
+      letter-spacing: 0.02em;
+    }
+
+    .logo span {
+      font-family: inherit;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .nav-list {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--main-dark);
+    }
+
+    .nav-list a {
+      position: relative;
+      padding: 8px 0;
+    }
+
+    .nav-list a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 2px;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-list a:hover::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 0 8px 22px rgba(75, 48, 31, 0.1);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .hamburger span {
+      position: absolute;
+      left: 12px;
+      width: 20px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--main-dark);
+      transition: transform 0.25s ease, opacity 0.25s ease, top 0.25s ease;
+    }
+
+    .hamburger span:nth-child(1) { top: 15px; }
+    .hamburger span:nth-child(2) { top: 21px; }
+    .hamburger span:nth-child(3) { top: 27px; }
+
+    .hamburger.is-open span:nth-child(1) {
+      top: 21px;
+      transform: rotate(45deg);
+    }
+
+    .hamburger.is-open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.is-open span:nth-child(3) {
+      top: 21px;
+      transform: rotate(-45deg);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      padding-top: 76px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: linear-gradient(rgba(61, 48, 40, 0.46), rgba(61, 48, 40, 0.56)), url("cafe-hero.png") center / cover no-repeat;
+      color: var(--white);
+      text-align: center;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 150px;
+      background: linear-gradient(transparent, var(--bg));
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: min(860px, calc(100% - 40px));
+      padding: 80px 0;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.2rem, 9vw, 6.8rem);
+      line-height: 1;
+      letter-spacing: 0.03em;
+      margin-bottom: 24px;
+      text-shadow: 0 12px 38px rgba(0, 0, 0, 0.24);
+    }
+
+    .hero-copy {
+      font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+      line-height: 2;
+      margin-bottom: 36px;
+      text-shadow: 0 8px 26px rgba(0, 0, 0, 0.26);
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 56px;
+      align-items: center;
+    }
+
+    .image-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      background: var(--line);
+    }
+
+    .image-card img {
+      width: 100%;
+      height: 440px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .image-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .about-text p + p {
+      margin-top: 18px;
+    }
+
+    .feature-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 28px;
+      list-style: none;
+    }
+
+    .feature-list li {
+      padding: 16px;
+      border-radius: 18px;
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      color: var(--main-dark);
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 10px 24px rgba(75, 48, 31, 0.06);
+    }
+
+    /* Menu */
+    .menu-section {
+      background: var(--bg-soft);
+    }
+
+    .menu-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 36px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .menu-card {
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(232, 216, 196, 0.75);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 54px rgba(75, 48, 31, 0.16);
+    }
+
+    .menu-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .menu-card-body {
+      padding: 24px;
+    }
+
+    .menu-card h3 {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--main-dark);
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .price {
+      color: var(--main);
+      white-space: nowrap;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .menu-card p {
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    /* Hours */
+    .hours-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .info-panel {
+      padding: 34px;
+      border-radius: var(--radius);
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+    }
+
+    .hours-table th,
+    .hours-table td {
+      padding: 18px 8px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+    }
+
+    .hours-table th {
+      color: var(--main-dark);
+      width: 40%;
+    }
+
+    .hours-table td {
+      color: var(--muted);
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f0dfcb;
+      color: var(--main-dark);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    /* Access */
+    .access-section {
+      background: linear-gradient(180deg, var(--bg) 0%, #efe0cf 100%);
+    }
+
+    .access-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .access-list {
+      margin-top: 28px;
+      list-style: none;
+    }
+
+    .access-list li {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 18px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(139, 94, 60, 0.18);
+    }
+
+    .access-list strong {
+      color: var(--main-dark);
+    }
+
+    .access-list span {
+      color: var(--muted);
+    }
+
+    .map-placeholder {
+      min-height: 240px;
+      margin-top: 24px;
+      border-radius: 20px;
+      border: 1px dashed rgba(139, 94, 60, 0.4);
+      background:
+        linear-gradient(135deg, rgba(255, 250, 243, 0.9), rgba(232, 216, 196, 0.9)),
+        repeating-linear-gradient(45deg, transparent, transparent 14px, rgba(139, 94, 60, 0.08) 14px, rgba(139, 94, 60, 0.08) 16px);
+      display: grid;
+      place-items: center;
+      color: var(--main-dark);
+      font-weight: 700;
+      text-align: center;
+      padding: 24px;
+    }
+
+    /* Contact & FAQ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      color: var(--main-dark);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--white);
+      color: var(--text);
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-group textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(201, 154, 107, 0.18);
+    }
+
+    .faq {
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 18px 20px;
+      border: 0;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--main-dark);
+      font: inherit;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .faq-icon {
+      flex: 0 0 auto;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .faq-icon::before,
+    .faq-icon::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--main);
+      transform: translate(-50%, -50%);
+      transition: transform 0.25s ease;
+    }
+
+    .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .faq-item.is-open .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer-inner {
+      padding: 0 20px 20px;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    .footer {
+      padding: 34px 0;
+      background: var(--main-dark);
+      color: rgba(255, 255, 255, 0.82);
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    /* Scroll Animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .section {
+        padding: 76px 0;
+      }
+
+      .about-grid,
+      .hours-grid,
+      .access-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-head {
+        display: block;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .image-card img {
+        height: 360px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(100% - 28px, 1120px);
+      }
+
+      .header-inner {
+        width: min(100% - 24px, 1180px);
+        height: 68px;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .nav {
+        position: fixed;
+        top: 68px;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 250, 243, 0.96);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 20px 30px rgba(75, 48, 31, 0.1);
+        transform: translateY(-120%);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+      }
+
+      .nav.is-open {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .nav-list {
+        display: grid;
+        gap: 0;
+        padding: 12px 22px 22px;
+      }
+
+      .nav-list li {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav-list a {
+        display: block;
+        padding: 14px 0;
+      }
+
+      .hero {
+        min-height: 92vh;
+        padding-top: 68px;
+      }
+
+      .hero-content {
+        padding: 68px 0;
+      }
+
+      .hero-copy {
+        line-height: 1.8;
+      }
+
+      .feature-list {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-card img {
+        height: 210px;
+      }
+
+      .info-panel {
+        padding: 24px;
+      }
+
+      .access-list li {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <a href="#hero" class="logo" aria-label="Cafe Komorebi トップへ">
+        Cafe Komorebi
+        <span>roastery & sweets</span>
+      </a>
+
+      <nav class="nav" id="globalNav" aria-label="グローバルナビゲーション">
+        <ul class="nav-list">
+          <li><a href="#about">お店の紹介</a></li>
+          <li><a href="#menu">メニュー</a></li>
+          <li><a href="#hours">営業時間</a></li>
+          <li><a href="#access">アクセス</a></li>
+          <li><a href="#contact">お問い合わせ</a></li>
+        </ul>
+      </nav>
+
+      <button class="hamburger" id="hamburger" type="button" aria-label="メニューを開く" aria-controls="globalNav" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-content fade-in">
+        <p class="hero-kicker">slow coffee, calm time</p>
+        <h1>Cafe Komorebi</h1>
+        <p class="hero-copy">木漏れ日のように、やさしく満ちる一杯を。<br />焼き菓子と自家焙煎コーヒーで、日常に小さな休息を届けます。</p>
+        <a href="#menu" class="btn btn-primary">メニューを見る</a>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container about-grid">
+        <div class="image-card fade-in">
+          <img src="cafe-interior.png" alt="Cafe Komorebiの温かみのある店内" />
+        </div>
+        <div class="about-text fade-in">
+          <p class="section-label">About</p>
+          <h2 class="section-title">静かな路地に佇む、くつろぎのカフェ。</h2>
+          <p class="lead">Cafe Komorebiは、街の喧騒から少し離れた場所にある小さなカフェです。木の質感を活かした落ち着いた空間で、ゆっくり本を読んだり、友人と会話を楽しんだり、一人の時間を整えたりできます。</p>
+          <p>豆は季節ごとに相性の良い産地を選び、香りがふわっと広がる浅煎りから、ミルクに合う深煎りまで丁寧にご用意しています。</p>
+          <ul class="feature-list">
+            <li>自家焙煎</li>
+            <li>手作り焼き菓子</li>
+            <li>Wi-Fi完備</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section menu-section" id="menu">
+      <div class="container">
+        <div class="menu-head fade-in">
+          <div>
+            <p class="section-label">Menu</p>
+            <h2 class="section-title">おすすめメニュー</h2>
+          </div>
+          <p class="lead">香り、甘さ、余韻まで楽しめる、Cafe Komorebiの定番メニューです。</p>
+        </div>
+
+        <div class="menu-grid">
+          <article class="menu-card fade-in">
+            <img src="cafe-coffee.png" alt="木漏れ日ブレンドコーヒー" />
+            <div class="menu-card-body">
+              <h3>木漏れ日ブレンド <span class="price">¥580</span></h3>
+              <p>ナッツのような香ばしさと、やわらかな甘みが特徴の定番ブレンド。</p>
+            </div>
+          </article>
+
+          <article class="menu-card fade-in">
+            <img src="cafe-sweets.png" alt="季節のチーズケーキ" />
+            <div class="menu-card-body">
+              <h3>季節のチーズケーキ <span class="price">¥720</span></h3>
+              <p>旬の果実を添えた、しっとり濃厚な自家製チーズケーキ。</p>
+            </div>
+          </article>
+
+          <article class="menu-card fade-in">
+            <img src="cafe-coffee.png" alt="カフェラテ" />
+            <div class="menu-card-body">
+              <h3>ハニーラテ <span class="price">¥650</span></h3>
+              <p>まろやかなミルクに国産はちみつを合わせた、ほっとする一杯。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="hours">
+      <div class="container hours-grid">
+        <div class="fade-in">
+          <p class="section-label">Open Hours</p>
+          <h2 class="section-title">営業時間</h2>
+          <p class="lead">朝のコーヒーから、夕方のひと休みまで。席数に限りがあるため、週末は少し余裕を持ってお越しください。</p>
+        </div>
+
+        <div class="info-panel fade-in">
+          <table class="hours-table">
+            <tbody>
+              <tr>
+                <th>月・火・木・金</th>
+                <td>10:00 - 19:00</td>
+              </tr>
+              <tr>
+                <th>土・日・祝</th>
+                <td>09:00 - 20:00</td>
+              </tr>
+              <tr>
+                <th>定休日</th>
+                <td>水曜日</td>
+              </tr>
+              <tr>
+                <th>ラストオーダー</th>
+                <td>閉店30分前</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="notice">臨時休業は公式SNSでお知らせします。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section access-section" id="access">
+      <div class="container access-grid">
+        <div class="fade-in">
+          <p class="section-label">Access</p>
+          <h2 class="section-title">アクセス</h2>
+          <p class="lead">駅から歩いて少し。散歩の途中に立ち寄りたくなる、緑の多い静かな通りにあります。</p>
+          <ul class="access-list">
+            <li>
+              <strong>住所</strong>
+              <span>〒248-0012 神奈川県鎌倉市こもれび町2-8-15</span>
+            </li>
+            <li>
+              <strong>最寄り駅</strong>
+              <span>江ノ電「こもれび坂駅」徒歩6分</span>
+            </li>
+            <li>
+              <strong>電話番号</strong>
+              <span>0467-00-1234</span>
+            </li>
+            <li>
+              <strong>駐車場</strong>
+              <span>近隣コインパーキングをご利用ください</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="fade-in">
+          <div class="image-card">
+            <img src="cafe-exterior.png" alt="Cafe Komorebiの外観" />
+          </div>
+          <div class="map-placeholder">Googleマップなどの地図埋め込みエリア</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container contact-grid">
+        <div class="info-panel fade-in">
+          <p class="section-label">Contact</p>
+          <h2 class="section-title">お問い合わせ</h2>
+          <p class="lead">貸切、取材、焼き菓子のご予約などは、こちらのフォームからお気軽にお問い合わせください。</p>
+
+          <form class="contact-form" action="#" method="post">
+            <div class="form-group">
+              <label for="name">お名前</label>
+              <input type="text" id="name" name="name" placeholder="山田 太郎" />
+            </div>
+            <div class="form-group">
+              <label for="email">メールアドレス</label>
+              <input type="email" id="email" name="email" placeholder="example@email.com" />
+            </div>
+            <div class="form-group">
+              <label for="message">お問い合わせ内容</label>
+              <textarea id="message" name="message" placeholder="お問い合わせ内容をご入力ください"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">送信する</button>
+          </form>
+        </div>
+
+        <div class="fade-in">
+          <p class="section-label">FAQ</p>
+          <h2 class="section-title">よくある質問</h2>
+          <div class="faq" id="faq">
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                予約はできますか？
+                <span class="faq-icon" aria-hidden="true"></span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">平日はお電話で席予約を承っています。土日祝は混雑状況により、予約枠を限定しています。</div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                テイクアウトはありますか？
+                <span class="faq-icon" aria-hidden="true"></span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">ドリンクと一部の焼き菓子はテイクアウト可能です。ケーキ類は当日の在庫状況によりご案内します。</div>
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-question" type="button" aria-expanded="false">
+                Wi-Fiや電源は使えますか？
+                <span class="faq-icon" aria-hidden="true"></span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">店内Wi-Fiをご利用いただけます。電源席はカウンターに4席ご用意しています。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 Cafe Komorebi. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById("hamburger");
+    const nav = document.getElementById("globalNav");
+    const navLinks = document.querySelectorAll(".nav-list a");
+
+    hamburger.addEventListener("click", () => {
+      const isOpen = hamburger.classList.toggle("is-open");
+      nav.classList.toggle("is-open", isOpen);
+      hamburger.setAttribute("aria-expanded", String(isOpen));
+      hamburger.setAttribute("aria-label", isOpen ? "メニューを閉じる" : "メニューを開く");
+    });
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        hamburger.classList.remove("is-open");
+        nav.classList.remove("is-open");
+        hamburger.setAttribute("aria-expanded", "false");
+        hamburger.setAttribute("aria-label", "メニューを開く");
+      });
+    });
+
+    const faqQuestions = document.querySelectorAll(".faq-question");
+
+    faqQuestions.forEach((question) => {
+      question.addEventListener("click", () => {
+        const item = question.closest(".faq-item");
+        const answer = item.querySelector(".faq-answer");
+        const isOpen = item.classList.contains("is-open");
+
+        document.querySelectorAll(".faq-item").forEach((faqItem) => {
+          faqItem.classList.remove("is-open");
+          faqItem.querySelector(".faq-question").setAttribute("aria-expanded", "false");
+          faqItem.querySelector(".faq-answer").style.maxHeight = null;
+        });
+
+        if (!isOpen) {
+          item.classList.add("is-open");
+          question.setAttribute("aria-expanded", "true");
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    });
+
+    const fadeElements = document.querySelectorAll(".fade-in");
+
+    if ("IntersectionObserver" in window) {
+      const fadeObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.16,
+        rootMargin: "0px 0px -40px 0px"
+      });
+
+      fadeElements.forEach((element) => fadeObserver.observe(element));
+    } else {
+      fadeElements.forEach((element) => element.classList.add("is-visible"));
+    }
+  </script>
+</body>
+</html>
